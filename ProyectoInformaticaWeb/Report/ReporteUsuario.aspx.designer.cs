@@ -11,7 +11,7 @@ namespace ProyectoInformaticaWeb.Report
 {
 
 
-    public partial class 03ReporteUsuario {
+    public partial class ReporteUsuario {
         
         /// <summary>
         /// Control form1.
