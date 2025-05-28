@@ -104,7 +104,10 @@
 
             <asp:Button ID="btnAgregarRol" runat="server" Text="Ingresar Rol" CssClass="btn btn-ingresar" OnClick="btnAgregarRol_Click" />
             <asp:Label ID="lblMensaje" runat="server" ForeColor="Green" />
+
+            <asp:Button ID="btnReporte" runat="server" Text="Generar Reporte" CssClass="btn btn-regresar" OnClick="btnReporte_Click" />
         </div>
+
 
         <div class="tabla-usuarios">
             <h3>Roles Registrados</h3>

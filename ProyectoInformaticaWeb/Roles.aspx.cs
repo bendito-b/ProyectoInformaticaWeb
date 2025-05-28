@@ -66,6 +66,11 @@ namespace ProyectoInformaticaWeb
                 gvRoles.DataBind();
             }
         }
+        protected void btnReporte_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Report/ReporteRoles.aspx");
+        }
+
 
         protected void gvRoles_RowEditing(object sender, GridViewEditEventArgs e)
         {
