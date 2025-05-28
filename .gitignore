@@ -364,3 +364,7 @@ FodyWeavers.xsd
 
 # Archivos que no se donde colocar
 Web.config
+
+# No ignorar los archivos dentro de SqlServerTypes
+!/SqlServerTypes/
+!/SqlServerTypes/*
