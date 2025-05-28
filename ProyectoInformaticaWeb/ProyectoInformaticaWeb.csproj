@@ -157,6 +157,7 @@
     <Content Include="Puertas.aspx" />
     <Content Include="Report\ReportePuertas.aspx" />
     <Content Include="Report\ReporteIncidencias.aspx" />
+    <Content Include="Report\ReporteSupervisor.aspx" />
     <Content Include="Roles.aspx" />
     <Content Include="Salida.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -262,6 +263,7 @@
     </Compile>
     <Compile Include="ClasesCDAO\IncidenciasDAO.cs" />
     <Compile Include="ClasesCDAO\PuertasDAO.cs" />
+    <Compile Include="ClasesCDAO\SupervisorDao.cs" />
     <Compile Include="CreacionTipos.aspx.cs">
       <DependentUpon>CreacionTipos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -373,6 +375,13 @@
     <Compile Include="Report\ReporteIncidencias.aspx.designer.cs">
       <DependentUpon>ReporteIncidencias.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Report\ReporteSupervisor.aspx.cs">
+      <DependentUpon>ReporteSupervisor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report\ReporteSupervisor.aspx.designer.cs">
+      <DependentUpon>ReporteSupervisor.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Roles.aspx.cs">
       <DependentUpon>Roles.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -437,6 +446,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Report\ReporteIncidencias.rdlc" />
     <EmbeddedResource Include="Report\ReportePuertas.rdlc" />
+    <EmbeddedResource Include="Report\ReporteSupervisor.rdlc" />
     <EmbeddedResource Include="Report\ReportUsuario.rdlc" />
   </ItemGroup>
   <PropertyGroup>

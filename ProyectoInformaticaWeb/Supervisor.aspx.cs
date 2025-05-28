@@ -25,7 +25,10 @@ namespace ProyectoInformaticaWeb
             if (!IsPostBack)
                 CargarSupervisores();
         }
-
+        protected void btnReporte_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Report/ReporteSupervisor.aspx");
+        }
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
             string nombre = txtNombre.Text.Trim();
