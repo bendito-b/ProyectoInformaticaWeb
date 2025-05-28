@@ -201,7 +201,7 @@
 
     <%-- Botón de Regresar (fuera del div de la tabla para que tenga su propio espacio) --%>
     <asp:Button ID="btnRegresar" runat="server" Text="Regresar" OnClick="btnRegresar_Click" CssClass="btn-regresar" />
-    <asp:Button ID="btnReporte" runat="server" Text="Generar Reporte" CssClass="btn btn-regresar" OnClick="btnReporte_Click" />
+
   </form>
 </body>
 </html>

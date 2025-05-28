@@ -66,11 +66,6 @@ namespace ProyectoInformaticaWeb
             CargarIncidencias();
         }
 
-        protected void btnReporte_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("~Report/ReporteIncidencias.aspx");
-        }
-
         private void CargarIncidencias()
         {
             DataTable tabla = new DataTable();
