@@ -30,6 +30,10 @@ namespace ProyectoInformaticaWeb
 
             }
         }
+        protected void btnReporte_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Report/ReporteUsuario.aspx");
+        }
 
         protected void gvUsuarios_RowCommand(object sender, GridViewCommandEventArgs e)
         {

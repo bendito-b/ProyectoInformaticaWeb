@@ -481,7 +481,7 @@
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
-        <DataSetName>Proyecto</DataSetName>
+        <DataSetName>Proyectosss</DataSetName>
         <Top>3.33058cm</Top>
         <Left>0.97578cm</Left>
         <Height>1.2cm</Height>
@@ -550,7 +550,7 @@
     </DataSource>
   </DataSources>
   <DataSets>
-    <DataSet Name="Proyecto">
+    <DataSet Name="Proyectosss">
       <Query>
         <DataSourceName>ProyectoDataSet</DataSourceName>
         <CommandText>/* Local Query */</CommandText>

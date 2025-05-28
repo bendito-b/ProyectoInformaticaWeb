@@ -124,6 +124,7 @@
 
             <asp:Button ID="btnRegistrar" runat="server" Text="Registrar Usuario" CssClass="btn btn-ingresar" OnClick="btnRegistrar_Click" />
             <asp:Label ID="lblMensaje" runat="server" ForeColor="Green" />
+            <asp:Button ID="btnReporte" runat="server" Text="Generar Reporte" CssClass="btn btn-regresar" OnClick="btnReporte_Click" />
         </div>
 
         <div class="tabla-usuarios">
