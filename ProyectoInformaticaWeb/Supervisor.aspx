@@ -117,6 +117,7 @@
 
             <asp:Button ID="btnAgregar" runat="server" Text="Ingresar Supervisor" CssClass="btn btn-ingresar" OnClick="btnAgregar_Click" />
             <asp:Button ID="btnRegresar" runat="server" Text="Regresar" CssClass="btn btn-regresar" OnClick="btnRegresar_Click" />
+            <asp:Button ID="btnReporte" runat="server" Text="Generar Reporte" CssClass="btn btn-regresar" OnClick="btnReporte_Click" />
             <asp:Label ID="lblMensaje" runat="server" ForeColor="Green" />
         </div>
 
