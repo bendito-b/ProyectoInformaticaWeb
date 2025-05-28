@@ -363,7 +363,9 @@ MigrationBackup/
 FodyWeavers.xsd
 
 # Archivos que no se donde colocar
-Web.config
+/ProyectoInformaticaWeb/Web.config
+/ProyectoInformaticaWeb/Web.Debug.config
+/ProyectoInformaticaWeb/Web.Release.config
 
 # No ignorar los archivos dentro de SqlServerTypes
 !/SqlServerTypes/
