@@ -79,6 +79,11 @@ namespace ProyectoInformaticaWeb
             gvPuertas.EditIndex = e.NewEditIndex;
             CargarGrid();
         }
+        protected void btnReporte_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("ReportePuertas.aspx");
+        }
+
 
         protected void gvPuertas_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {

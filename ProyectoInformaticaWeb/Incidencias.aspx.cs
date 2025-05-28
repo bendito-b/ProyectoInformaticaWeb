@@ -167,7 +167,7 @@ namespace ProyectoInformaticaWeb
             else
             {
                 lblMensaje.ForeColor = System.Drawing.Color.Red;
-                lblMensaje.Text = "Por favor, *selecciona una incidencia* para habilitar.";
+                lblMensaje.Text = "Por favor, selecciona una incidencia para habilitar.";
             }
         }
 
@@ -181,7 +181,7 @@ namespace ProyectoInformaticaWeb
             else
             {
                 lblMensaje.ForeColor = System.Drawing.Color.Red;
-                lblMensaje.Text = "Por favor, *selecciona una incidencia* para deshabilitar.";
+                lblMensaje.Text = "Por favor, selecciona una incidencia para deshabilitar.";
             }
         }
 
@@ -196,6 +196,6 @@ namespace ProyectoInformaticaWeb
         {
             // Este evento es necesario para que SelectedDataKey funcione correctamente.
             // No necesita código dentro, solo la declaración para que el PostBack funcione.
-        }
+        }
     }
 }

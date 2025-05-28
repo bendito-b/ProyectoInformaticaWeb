@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Web.UI.WebControls;
 using ProyectoInformaticaWeb.ClasesCDAO;
 
 namespace ProyectoInformaticaWeb
@@ -24,8 +26,61 @@ namespace ProyectoInformaticaWeb
             if (!IsPostBack)
             {
                 CargarUsuarios();
+                gvUsuarios.RowCommand += gvUsuarios_RowCommand;
+
             }
         }
+
+        protected void gvUsuarios_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "Deshabilitar" || e.CommandName == "Habilitar")
+            {
+                int idUsuario = Convert.ToInt32(e.CommandArgument);
+                int nuevoEstado = (e.CommandName == "Deshabilitar") ? 0 : 1;
+
+                string connectionString = ConfigurationManager.ConnectionStrings["InformaticaWeb"].ConnectionString;
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("UPDATE usuario1  SET estado = @estado WHERE id_usuario = @id", conn);
+                    cmd.Parameters.AddWithValue("@estado", nuevoEstado);
+                    cmd.Parameters.AddWithValue("@id", idUsuario);
+                    cmd.ExecuteNonQuery();
+                }
+
+                // Recargar usuarios
+                CargarUsuarios();
+            }
+        }
+
+
+
+
+        private void CambiarEstadoUsuario(int id, int nuevoEstado)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["InformaticaWeb"].ConnectionString;
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = "UPDATE Usuarios SET estado = @estado WHERE id_usuario = @id";
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@estado", nuevoEstado);
+                cmd.Parameters.AddWithValue("@id", id);
+
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+
+            CargarUsuarios(); // Refresca la grilla después de cambiar el estado
+        }
+
+        protected void btnVolver_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Default1.aspx");
+        }
+
+
 
         protected void btnRegistrar_Click(object sender, EventArgs e)
         {

@@ -109,7 +109,7 @@
 
             <div class="form-group">
                 <label for="txtContrasena">Contraseña:</label>
-                <asp:TextBox ID="txtContrasena" runat="server" TextMode="Password" MaxLength="256" />
+                <asp:TextBox ID="txtContrasena" runat="server" MaxLength="256" />
             </div>
 
             <div class="form-group">
@@ -128,7 +128,8 @@
 
         <div class="tabla-usuarios">
             <h3>Usuarios Registrados</h3>
-            <asp:GridView ID="gvUsuarios" runat="server" AutoGenerateColumns="false">
+            
+            <asp:GridView ID="gvUsuarios" runat="server" AutoGenerateColumns="false" OnRowCommand="gvUsuarios_RowCommand">
                 <Columns>
                     <asp:BoundField HeaderText="ID" DataField="id_usuario" />
                     <asp:BoundField HeaderText="Nombre" DataField="nombre" />
@@ -137,8 +138,19 @@
                     <asp:BoundField HeaderText="Contraseña" DataField="contrasena" />
                     <asp:BoundField HeaderText="Rol ID" DataField="rol_id" />
                     <asp:BoundField HeaderText="Estado" DataField="estado" />
+                    <asp:TemplateField HeaderText="Acciones">
+                        <ItemTemplate>
+                            <asp:Button ID="btnEstado" runat="server"
+                                Text='<%# Eval("estado").ToString() == "1" ? "Deshabilitar" : "Habilitar" %>'
+                                CommandName='<%# Eval("estado").ToString() == "1" ? "Deshabilitar" : "Habilitar" %>'
+                                CommandArgument='<%# Eval("id_usuario") %>'
+                                CssClass='<%# Eval("estado").ToString() == "1" ? "btn btn-danger" : "btn btn-success" %>' />
+                        </ItemTemplate>
+                    </asp:TemplateField>
                 </Columns>
             </asp:GridView>
+
+            <asp:Button ID="btnVolver" runat="server" Text="Volver al Inicio" CssClass="btn btn-primary" OnClick="btnVolver_Click" />
         </div>
     </form>
 </body>

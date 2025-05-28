@@ -127,6 +127,8 @@
                 Text="Regresar"
                 CssClass="btn btn-regresar"
                 OnClick="btnRegresar_Click" />
+            <asp:Button ID="btnReporte" runat="server" Text="Generar Reporte" CssClass="btn btn-regresar" OnClick="btnReporte_Click" />
+
 
             <asp:Label ID="lblMensaje" runat="server" ForeColor="Green" />
         </div>
