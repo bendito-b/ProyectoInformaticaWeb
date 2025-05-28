@@ -48,7 +48,7 @@
         <!-- <a href="CreacionTipos.aspx">CREACION TIPOS</a>
         <a href="JefesAdmin.aspx">JEFES ADMIN</a>
         <a href="Salida.aspx">SALIDA</a>-->
-        <a href="Roles.aspx">MANTENIMIENTO ROLES</a>
+        <a href="Roles.aspx">MANTENIMIENTO ROLES/Pruebas</a>
         <a href="Supervisor.aspx">MANTENIMIENTO SUPERVISOR</a>
         <a href="Incidencias.aspx">INCIDENCIAS</a>
         <a href="Usuario1.aspx">CREACION USUARIOS</a>
