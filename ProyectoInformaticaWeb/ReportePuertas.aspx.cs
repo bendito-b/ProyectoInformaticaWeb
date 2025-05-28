@@ -17,7 +17,7 @@ namespace ProyectoInformaticaWeb
                 ReportViewer1.LocalReport.ReportPath = Server.MapPath("~/Report/ReportePuertas.rdlc");
                 ReportViewer1.LocalReport.DataSources.Clear();
                 ReportViewer1.LocalReport.DataSources.Add(
-                    new ReportDataSource("PuertasDS", dt));
+                    new ReportDataSource("Proyecto", dt)); // Asegúrate que coincida con tu .rdlc
                 ReportViewer1.LocalReport.Refresh();
             }
         }
