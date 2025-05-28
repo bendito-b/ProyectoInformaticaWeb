@@ -81,7 +81,7 @@ namespace ProyectoInformaticaWeb
         }
         protected void btnReporte_Click(object sender, EventArgs e)
         {
-            Response.Redirect("ReportePuertas.aspx");
+            Response.Redirect("~Report/ReportePuertas.aspx");
         }
 
 

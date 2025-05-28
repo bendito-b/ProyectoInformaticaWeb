@@ -155,7 +155,7 @@
     <Content Include="JefesAdmin.aspx" />
     <Content Include="LoginInicial.aspx" />
     <Content Include="Puertas.aspx" />
-    <Content Include="ReportePuertas.aspx" />
+    <Content Include="Report\ReportePuertas.aspx" />
     <Content Include="Report\ReporteIncidencias.aspx" />
     <Content Include="Roles.aspx" />
     <Content Include="Salida.aspx" />
@@ -359,11 +359,11 @@
     <Compile Include="Puertas.aspx.designer.cs">
       <DependentUpon>Puertas.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ReportePuertas.aspx.cs">
+    <Compile Include="Report\ReportePuertas.aspx.cs">
       <DependentUpon>ReportePuertas.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="ReportePuertas.aspx.designer.cs">
+    <Compile Include="Report\ReportePuertas.aspx.designer.cs">
       <DependentUpon>ReportePuertas.aspx</DependentUpon>
     </Compile>
     <Compile Include="Report\ReporteIncidencias.aspx.cs">
