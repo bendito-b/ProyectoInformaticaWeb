@@ -135,33 +135,33 @@
 
         <div class="tabla-datos">
             <h3>Listado de Puertas</h3>
-            <asp:GridView ID="gvPuertas" runat="server" AutoGenerateColumns="False"
-    OnRowEditing="gvPuertas_RowEditing"
-    OnRowUpdating="gvPuertas_RowUpdating"
-    OnRowCancelingEdit="gvPuertas_RowCancelingEdit"
-    OnRowDeleting="gvPuertas_RowDeleting"
-    OnRowCommand="gvPuertas_RowCommand"
-    DataKeyNames="id_puerta">
-    <Columns>
-        <asp:BoundField DataField="id_puerta" HeaderText="ID" ReadOnly="True" />
-        <asp:BoundField DataField="ubicacion" HeaderText="Ubicación" />
-        <asp:TemplateField HeaderText="Estado">
-            <ItemTemplate>
-                <%# Convert.ToInt32(Eval("estado")) == 1 ? "Habilitado" : "Inhabilitado" %>
-            </ItemTemplate>
-        </asp:TemplateField>
-        <asp:TemplateField HeaderText="Cambiar Estado">
-            <ItemTemplate>
-                <asp:Button ID="btnCambiarEstado" runat="server"
-                    CommandName="CambiarEstado"
-                    CommandArgument='<%# Eval("id_puerta") %>'
-                    Text='<%# Convert.ToInt32(Eval("estado")) == 1 ? "Deshabilitar" : "Habilitar" %>' 
-                    CssClass="btn btn-sm btn-warning" />
-            </ItemTemplate>
-        </asp:TemplateField>
-        <asp:CommandField ShowEditButton="True" ShowDeleteButton="True" />
-    </Columns>
-</asp:GridView>
+                <asp:GridView ID="gvPuertas" runat="server" AutoGenerateColumns="False"
+                            OnRowEditing="gvPuertas_RowEditing"
+                            OnRowUpdating="gvPuertas_RowUpdating"
+                            OnRowCancelingEdit="gvPuertas_RowCancelingEdit"
+                            OnRowDeleting="gvPuertas_RowDeleting"
+                            OnRowCommand="gvPuertas_RowCommand"
+                            DataKeyNames="id_puerta">
+                    <Columns>
+                        <asp:BoundField DataField="id_puerta" HeaderText="ID" ReadOnly="True" />
+                        <asp:BoundField DataField="ubicacion" HeaderText="Ubicación" />
+                        <asp:TemplateField HeaderText="Estado">
+                            <ItemTemplate>
+                                <%# Convert.ToInt32(Eval("estado")) == 1 ? "Habilitado" : "Inhabilitado" %>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Cambiar Estado">
+                            <ItemTemplate>
+                                <asp:Button ID="btnCambiarEstado" runat="server"
+                                    CommandName="CambiarEstado"
+                                    CommandArgument='<%# Eval("id_puerta") %>'
+                                    Text='<%# Convert.ToInt32(Eval("estado")) == 1 ? "Deshabilitar" : "Habilitar" %>' 
+                                    CssClass="btn btn-sm btn-warning" />
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:CommandField ShowEditButton="True" ShowDeleteButton="True" />
+                    </Columns>
+                </asp:GridView>
 
         </div>
     </form>

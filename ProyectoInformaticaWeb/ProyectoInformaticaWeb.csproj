@@ -155,7 +155,8 @@
     <Content Include="JefesAdmin.aspx" />
     <Content Include="LoginInicial.aspx" />
     <Content Include="Puertas.aspx" />
-    <Content Include="ReportePuertas.aspx" />
+    <Content Include="Report\ReportePuertas.aspx" />
+    <Content Include="Report\ReporteIncidencias.aspx" />
     <Content Include="Roles.aspx" />
     <Content Include="Salida.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -189,6 +190,7 @@
     <Content Include="ProyectoDataSet.xsc">
       <DependentUpon>ProyectoDataSet.xsd</DependentUpon>
     </Content>
+    <Content Include="Web.config" />
     <None Include="ProyectoDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>ProyectoDataSet.Designer.cs</LastGenOutput>
@@ -241,9 +243,14 @@
     <Content Include="Supervisor.aspx" />
     <Content Include="Usuario1.aspx" />
     <Content Include="ViewSwitcher.ascx" />
-    <Content Include="Web.config" />
     <Content Include="Bundle.config" />
     <Content Include="Site.Mobile.Master" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdministracionJefes.aspx.cs">
@@ -253,6 +260,7 @@
     <Compile Include="AdministracionJefes.aspx.designer.cs">
       <DependentUpon>AdministracionJefes.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ClasesCDAO\IncidenciasDAO.cs" />
     <Compile Include="ClasesCDAO\PuertasDAO.cs" />
     <Compile Include="CreacionTipos.aspx.cs">
       <DependentUpon>CreacionTipos.aspx</DependentUpon>
@@ -351,12 +359,19 @@
     <Compile Include="Puertas.aspx.designer.cs">
       <DependentUpon>Puertas.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ReportePuertas.aspx.cs">
+    <Compile Include="Report\ReportePuertas.aspx.cs">
       <DependentUpon>ReportePuertas.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="ReportePuertas.aspx.designer.cs">
+    <Compile Include="Report\ReportePuertas.aspx.designer.cs">
       <DependentUpon>ReportePuertas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Report\ReporteIncidencias.aspx.cs">
+      <DependentUpon>ReporteIncidencias.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report\ReporteIncidencias.aspx.designer.cs">
+      <DependentUpon>ReporteIncidencias.aspx</DependentUpon>
     </Compile>
     <Compile Include="Roles.aspx.cs">
       <DependentUpon>Roles.aspx</DependentUpon>
@@ -418,16 +433,11 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.7.0.slim.min.map" />
     <Content Include="Scripts\jquery-3.7.0.min.map" />
-    <None Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Report\ReporteIncidencias.rdlc" />
     <EmbeddedResource Include="Report\ReportePuertas.rdlc" />
-    <EmbeddedResource Include="Report\ReporteSupervisor.rdlc" />
+    <EmbeddedResource Include="Report\ReportUsuario.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
