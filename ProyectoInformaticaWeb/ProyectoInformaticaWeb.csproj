@@ -437,6 +437,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Report\ReporteIncidencias.rdlc" />
     <EmbeddedResource Include="Report\ReportePuertas.rdlc" />
+    <EmbeddedResource Include="Report\ReportUsuario.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
