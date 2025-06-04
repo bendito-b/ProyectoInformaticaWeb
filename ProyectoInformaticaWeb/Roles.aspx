@@ -60,6 +60,9 @@
         .btn-ingresar { background-color: #48bb78; color: white; }
         .btn-ingresar:hover { background-color: #38a169; }
 
+        .btn-regresar { background-color: #4299e1; color: white; }
+        .btn-regresar:hover { background-color: #3182ce; }
+
         .tabla-usuarios {
             margin-top: 30px;
             background-color: #fff;
@@ -85,6 +88,14 @@
             background-color: #0072ff;
             color: white;
         }
+
+        iframe {
+            margin-top: 30px;
+            border: none;
+            width: 100%;
+            max-width: 1000px;
+            height: 700px;
+        }
     </style>
 </head>
 <body>
@@ -105,47 +116,55 @@
             <asp:Button ID="btnAgregarRol" runat="server" Text="Ingresar Rol" CssClass="btn btn-ingresar" OnClick="btnAgregarRol_Click" />
             <asp:Label ID="lblMensaje" runat="server" ForeColor="Green" />
 
-            <asp:Button ID="btnReporte" runat="server" Text="Generar Reporte" CssClass="btn btn-regresar" OnClick="btnReporte_Click" />
+            <!-- Botón que muestra el reporte -->
+            <asp:Button ID="btnReporte" runat="server" Text="Mostrar Reporte" CssClass="btn btn-regresar" OnClientClick="mostrarIframe(); return false;" />
+            <asp:Button ID="btnRegresar" runat="server" Text="Regresar" OnClick="btnRegresar_Click" CssClass="btn-regresar" />
         </div>
-
 
         <div class="tabla-usuarios">
             <h3>Roles Registrados</h3>
             <asp:GridView ID="gvRoles" runat="server" AutoGenerateColumns="False"
-    OnRowCommand="gvRoles_RowCommand"
-    OnRowEditing="gvRoles_RowEditing"
-    OnRowCancelingEdit="gvRoles_RowCancelingEdit"
-    OnRowUpdating="gvRoles_RowUpdating"
-    DataKeyNames="id_rol">
+                OnRowCommand="gvRoles_RowCommand"
+                OnRowEditing="gvRoles_RowEditing"
+                OnRowCancelingEdit="gvRoles_RowCancelingEdit"
+                OnRowUpdating="gvRoles_RowUpdating"
+                DataKeyNames="id_rol">
 
-    <Columns>
-        <asp:BoundField DataField="id_rol" HeaderText="ID" ReadOnly="true" />
-        <asp:TemplateField HeaderText="Nombre">
-            <ItemTemplate>
-                <%# Eval("nombre") %>
-            </ItemTemplate>
-            <EditItemTemplate>
-                <asp:TextBox ID="txtNombreEdit" runat="server" Text='<%# Bind("nombre") %>' />
-            </EditItemTemplate>
-        </asp:TemplateField>
-        <asp:BoundField DataField="estado" HeaderText="Estado" />
-
-        <asp:TemplateField HeaderText="Acciones">
-            <ItemTemplate>
-                <asp:Button ID="btnHabilitar" runat="server" CommandName="Habilitar"
-                    CommandArgument='<%# Container.DataItemIndex %>' Text="Habilitar"
-                    Visible='<%# Eval("estado").ToString().Trim() == "0" %>' />
-
-                <asp:Button ID="btnDeshabilitar" runat="server" CommandName="Deshabilitar"
-                    CommandArgument='<%# Container.DataItemIndex %>' Text="Deshabilitar"
-                    Visible='<%# Eval("estado").ToString().Trim() == "1" %>' />
-            </ItemTemplate>
-        </asp:TemplateField>
-        <asp:CommandField ShowEditButton="True" />
-    </Columns>
-</asp:GridView>
-
+                <Columns>
+                    <asp:BoundField DataField="id_rol" HeaderText="ID" ReadOnly="true" />
+                    <asp:TemplateField HeaderText="Nombre">
+                        <ItemTemplate>
+                            <%# Eval("nombre") %>
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txtNombreEdit" runat="server" Text='<%# Bind("nombre") %>' />
+                        </EditItemTemplate>
+                    </asp:TemplateField>
+                    <asp:BoundField DataField="estado" HeaderText="Estado" />
+                    <asp:TemplateField HeaderText="Acciones">
+                        <ItemTemplate>
+                            <asp:Button ID="btnHabilitar" runat="server" CommandName="Habilitar"
+                                CommandArgument='<%# Container.DataItemIndex %>' Text="Habilitar"
+                                Visible='<%# Eval("estado").ToString().Trim() == "0" %>' />
+                            <asp:Button ID="btnDeshabilitar" runat="server" CommandName="Deshabilitar"
+                                CommandArgument='<%# Container.DataItemIndex %>' Text="Deshabilitar"
+                                Visible='<%# Eval("estado").ToString().Trim() == "1" %>' />
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:CommandField ShowEditButton="True" />
+                </Columns>
+            </asp:GridView>
         </div>
+
+        <!-- IFRAME oculto inicialmente -->
+        <iframe id="iframeReporte" src="/Report/ReporteRoles.aspx" style="width:100%; height:900px; border:none; border-radius:12px; box-shadow: 0 0 10px rgba(0,0,0,0.1); margin-top:30px;"></iframe>
+
     </form>
+
+    <script type="text/javascript">
+        function mostrarIframe() {
+            document.getElementById("iframeReporte").style.display = "block";
+        }
+    </script>
 </body>
 </html>
