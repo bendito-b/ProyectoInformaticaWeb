@@ -271,6 +271,7 @@
     <Content Include="Incidencias.aspx" />
     <Content Include="LoginInicial.aspx" />
     <Content Include="Puertas.aspx" />
+    <Content Include="Report\ReporteAlumnos.aspx" />
     <Content Include="Report\ReporteHistorialPer.aspx" />
     <Content Include="Report\ReportePuertas.aspx" />
     <Content Include="Report\ReporteIncidencias.aspx" />
@@ -312,6 +313,17 @@
     </Content>
     <Content Include="SupervisorPuerta.aspx" />
     <Content Include="Web.config" />
+    <Content Include="DataSetAlumnos.xsc">
+      <DependentUpon>DataSetAlumnos.xsd</DependentUpon>
+    </Content>
+    <None Include="DataSetAlumnos.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSetAlumnos.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="DataSetAlumnos.xss">
+      <DependentUpon>DataSetAlumnos.xsd</DependentUpon>
+    </Content>
     <None Include="ProyectoDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>ProyectoDataSet.Designer.cs</LastGenOutput>
@@ -392,6 +404,8 @@
     <Compile Include="AdministracionJefes.aspx.designer.cs">
       <DependentUpon>AdministracionJefes.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ClasesCDAO\Alumno.cs" />
+    <Compile Include="ClasesCDAO\AlumnoDAO.cs" />
     <Compile Include="ClasesCDAO\HisPerDAO.cs" />
     <Compile Include="ClasesCDAO\IncidenciasDAO.cs" />
     <Compile Include="ClasesCDAO\PuertasDAO.cs" />
@@ -412,6 +426,11 @@
     </Compile>
     <Compile Include="CreacionUsuarios.aspx.designer.cs">
       <DependentUpon>CreacionUsuarios.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DataSetAlumnos.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSetAlumnos.xsd</DependentUpon>
     </Compile>
     <Compile Include="Default1.aspx.cs">
       <DependentUpon>Default1.aspx</DependentUpon>
@@ -500,6 +519,12 @@
     </Compile>
     <Compile Include="Puertas.aspx.designer.cs">
       <DependentUpon>Puertas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Report\ReporteAlumnos.aspx.cs">
+      <DependentUpon>ReporteAlumnos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Report\ReporteAlumnos.aspx.designer.cs">
+      <DependentUpon>ReporteAlumnos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Report\ReporteHistorialPer.aspx.cs">
       <DependentUpon>ReporteHistorialPer.aspx</DependentUpon>
@@ -612,6 +637,7 @@
     <Content Include="Scripts\jquery-3.7.0.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Report\ReporteAlumnos.rdlc" />
     <EmbeddedResource Include="Report\ReporteHistorialPer.rdlc" />
     <EmbeddedResource Include="Report\ReporteIncidencias.rdlc" />
     <EmbeddedResource Include="Report\ReportePuertas.rdlc" />
