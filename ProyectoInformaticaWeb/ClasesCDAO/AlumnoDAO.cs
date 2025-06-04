@@ -1,41 +1,54 @@
-﻿using Proyecto.Modelos;
-using ProyectoInformaticaWeb.ClasesCDAO; 
-using System;
-using System.Collections.Generic; 
+﻿using System;
+using System.Collections.Generic; // Necessary for List<T>
 using System.Data;
-using System.Data.SqlClient; 
+using System.Data.SqlClient; // Necessary for interacting with SQL Server
+using ProyectoInformaticaWeb.ClasesCDAO; // Import the namespace of your Conexiones class
+using Proyecto.Modelos; // Import the namespace of your Alumno model
 
-namespace Proyecto.Datos 
+namespace Proyecto.Datos // Ensure this namespace matches your project's if different
 {
     public class AlumnoDAO
     {
+        // No need for a connection string here, it will be obtained from the Conexiones class
 
         public AlumnoDAO()
         {
             // Constructor
         }
 
-        public List<Alumno> ObtenerAlumnos()
+        /// <summary>
+        /// Gets a list of Alumno objects from the database using the usp_ObtenerAlumno stored procedure.
+        /// </summary>
+
+        /// <returns>A list of Alumno objects.</returns>
+        public List<Alumno> ObtenerAlumnos(string nombres , string apellidos )
         {
             List<Alumno> listaAlumnos = new List<Alumno>();
 
-            // Usamos Conexiones.Conectar() para obtener la conexión
+            // Use Conexiones.Conectar() to get the connection
             using (SqlConnection connection = Conexiones.Conectar())
             {
                 using (SqlCommand command = new SqlCommand("usp_ObtenerAlumno", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
+                    // Add parameters to the command
+                    // If the input string is null or empty, send DBNull.Value to the stored procedure
+                    command.Parameters.AddWithValue("@Nombres", string.IsNullOrEmpty(nombres) ? (object)DBNull.Value : nombres);
+                    command.Parameters.AddWithValue("@Apellidos", string.IsNullOrEmpty(apellidos) ? (object)DBNull.Value : apellidos);
+
                     try
                     {
+                        // The connection is already opened in Conexiones.Conectar(),
+                        // so no need to call connection.Open() here.
 
                         SqlDataReader reader = command.ExecuteReader();
 
-                        // Leemos los datos del SqlDataReader y creamos objetos Alumno
+                        // Read data from SqlDataReader and create Alumno objects
                         while (reader.Read())
                         {
                             Alumno alumno = new Alumno();
-                            // Asegúrate de que los nombres de las columnas coincidan con los del SP
+                            // Ensure column names match those in the stored procedure
                             alumno.id_alumno = Convert.ToInt32(reader["id_alumno"]);
                             alumno.dni = reader["dni"].ToString();
                             alumno.nombres = reader["nombres"].ToString();
@@ -46,22 +59,22 @@ namespace Proyecto.Datos
 
                             listaAlumnos.Add(alumno);
                         }
-                        reader.Close(); // Cierra el lector de datos
+                        reader.Close(); // Close the data reader
                     }
                     catch (SqlException ex)
                     {
-                        // Manejo de errores de SQL
-                        Console.WriteLine($"Error de SQL al obtener alumnos: {ex.Message}");
-                        throw; // Vuelve a lanzar la excepción
+                        // SQL error handling
+                        Console.WriteLine($"SQL error getting students: {ex.Message}");
+                        throw; // Re-throw the exception
                     }
                     catch (Exception ex)
                     {
-                        // Manejo de errores generales
-                        Console.WriteLine($"Error general al obtener alumnos: {ex.Message}");
+                        // General error handling
+                        Console.WriteLine($"General error getting students: {ex.Message}");
                         throw;
                     }
                 }
-            } // La conexión se cierra automáticamente al salir del bloque 'using'
+            } // The connection is automatically closed when exiting the 'using' block
             return listaAlumnos;
         }
     }

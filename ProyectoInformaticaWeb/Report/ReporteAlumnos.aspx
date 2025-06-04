@@ -13,12 +13,67 @@
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Reporte de Alumnos</title>
+    <style>
+        /* Basic styling for better layout */
+        .filter-container {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+        }
+        .filter-item {
+            display: flex;
+            flex-direction: column;
+        }
+        .filter-item label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .filter-item input[type="text"] {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 200px; /* Adjust as needed */
+        }
+        .filter-button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        .filter-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
     <form id="form1" runat="server">
         <div>
             <h2>Reporte de Alumnos</h2>
             <br />
+            <asp:ScriptManager ID="ScriptManager1" runat="server" />
+
+            <div class="filter-container">
+                <div class="filter-item">
+                    <asp:Label ID="lblNombres" runat="server" Text="Nombres:"></asp:Label>
+                    <asp:TextBox ID="txtNombres" runat="server"></asp:TextBox>
+                </div>
+                <div class="filter-item">
+                    <asp:Label ID="lblApellidos" runat="server" Text="Apellidos:"></asp:Label>
+                    <asp:TextBox ID="txtApellidos" runat="server"></asp:TextBox>
+                </div>
+                <asp:Button ID="btnFiltrar" runat="server" Text="Filtrar Reporte" CssClass="filter-button" OnClick="btnFiltrar_Click" />
+            </div>
+
             <rsweb:ReportViewer ID="ReportViewer1" runat="server" Width="100%" Height="800px"></rsweb:ReportViewer>
         </div>
     </form>

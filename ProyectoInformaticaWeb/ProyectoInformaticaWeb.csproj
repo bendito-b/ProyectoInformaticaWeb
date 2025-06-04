@@ -522,6 +522,7 @@
     </Compile>
     <Compile Include="Report\ReporteAlumnos.aspx.cs">
       <DependentUpon>ReporteAlumnos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Report\ReporteAlumnos.aspx.designer.cs">
       <DependentUpon>ReporteAlumnos.aspx</DependentUpon>
