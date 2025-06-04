@@ -267,7 +267,7 @@
     <Compile Include="ClasesCDAO\PuertasDAO.cs" />
     <Compile Include="ClasesCDAO\UsuarioDAO.cs" />
     <Compile Include="ClasesCDAO\RolesDAOcs.cs" />
-    <Compile Include="ClasesCDAO\SupervisorDao.cs" />
+    <Compile Include="ClasesCDAO\SupervisorDAO.cs" />
     <Compile Include="CreacionTipos.aspx.cs">
       <DependentUpon>CreacionTipos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

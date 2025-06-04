@@ -16,7 +16,7 @@ namespace ProyectoInformaticaWeb.Report
         {
             if (!IsPostBack)
             {
-                DataTable dt = SupervisorDao.CargarDatosSupervisor(); // Asegúrate de que este método devuelve un DataTable con los datos necesarios
+                DataTable dt = SupervisorDAO.CargarDatosSupervisor(); // Asegúrate de que este método devuelve un DataTable con los datos necesarios
 
                 ReportViewer1.ProcessingMode = ProcessingMode.Local;
                 ReportViewer1.LocalReport.ReportPath = Server.MapPath("~/Report/ReporteSupervisor.rdlc");
