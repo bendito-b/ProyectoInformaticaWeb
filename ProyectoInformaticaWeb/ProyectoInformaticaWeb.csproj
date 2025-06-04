@@ -45,6 +45,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Data.SqlClient">
+      <HintPath>..\..\..\..\..\..\..\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\Microsoft.Data.SqlClient.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.ReportViewer.Common, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1652.0\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
     </Reference>
@@ -151,10 +154,12 @@
     <Content Include="form.aspx" />
     <Content Include="GenerarQR.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="HistorialPer.aspx" />
     <Content Include="Incidencias.aspx" />
     <Content Include="JefesAdmin.aspx" />
     <Content Include="LoginInicial.aspx" />
     <Content Include="Puertas.aspx" />
+    <Content Include="Report\ReporteHistorialPer.aspx" />
     <Content Include="Report\ReportePuertas.aspx" />
     <Content Include="Report\ReporteIncidencias.aspx" />
     <Content Include="Report\ReporteUsuario.aspx" />
@@ -201,6 +206,17 @@
     </None>
     <Content Include="ProyectoDataSet.xss">
       <DependentUpon>ProyectoDataSet.xsd</DependentUpon>
+    </Content>
+    <Content Include="ProyectoDataSet2.xsc">
+      <DependentUpon>ProyectoDataSet2.xsd</DependentUpon>
+    </Content>
+    <None Include="ProyectoDataSet2.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ProyectoDataSet2.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="ProyectoDataSet2.xss">
+      <DependentUpon>ProyectoDataSet2.xsd</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
@@ -263,6 +279,7 @@
     <Compile Include="AdministracionJefes.aspx.designer.cs">
       <DependentUpon>AdministracionJefes.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ClasesCDAO\HisPerDAO.cs" />
     <Compile Include="ClasesCDAO\IncidenciasDAO.cs" />
     <Compile Include="ClasesCDAO\PuertasDAO.cs" />
     <Compile Include="ClasesCDAO\UsuarioDAO.cs" />
@@ -331,6 +348,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="HistorialPer.aspx.cs">
+      <DependentUpon>HistorialPer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HistorialPer.aspx.designer.cs">
+      <DependentUpon>HistorialPer.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Incidencias.aspx.cs">
       <DependentUpon>Incidencias.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -358,12 +382,24 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ProyectoDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="ProyectoDataSet2.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProyectoDataSet2.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Puertas.aspx.cs">
       <DependentUpon>Puertas.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Puertas.aspx.designer.cs">
       <DependentUpon>Puertas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Report\ReporteHistorialPer.aspx.cs">
+      <DependentUpon>ReporteHistorialPer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report\ReporteHistorialPer.aspx.designer.cs">
+      <DependentUpon>ReporteHistorialPer.aspx</DependentUpon>
     </Compile>
     <Compile Include="Report\ReportePuertas.aspx.cs">
       <DependentUpon>ReportePuertas.aspx</DependentUpon>
@@ -462,6 +498,7 @@
     <Content Include="Scripts\jquery-3.7.0.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Report\ReporteHistorialPer.rdlc" />
     <EmbeddedResource Include="Report\ReporteIncidencias.rdlc" />
     <EmbeddedResource Include="Report\ReportePuertas.rdlc" />
     <EmbeddedResource Include="Report\ReporteSupervisor.rdlc" />

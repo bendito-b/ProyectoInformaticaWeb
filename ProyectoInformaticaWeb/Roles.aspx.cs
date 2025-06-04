@@ -93,5 +93,12 @@ namespace ProyectoInformaticaWeb
                 CargarRoles();
             }
         }
+        protected void btnRegresar_Click(object sender, EventArgs e)
+        {
+            // ¡IMPORTANTE! Aquí se especifica a qué página regresar.
+            // Asegúrate de que "Default1.aspx" sea el nombre correcto de tu página principal.
+            Response.Redirect("Default1.aspx");
+        }
+
     }
 }
