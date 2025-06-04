@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Data;
-using System.Data.SqlClient;
 using System.Web.UI.WebControls;
 using ProyectoInformaticaWeb.ClasesCDAO;
 
@@ -10,71 +8,68 @@ namespace ProyectoInformaticaWeb
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["credencial"] == null)
+            if (!SesionValida())
             {
                 Response.Redirect("LoginInicial.aspx");
                 return;
             }
 
-            string[] partes = Session["credencial"].ToString().Split('|');
-            if (partes.Length != 2 || !InformaticaDAO.VerificarSesion(partes[0], partes[1]))
-            {
-                Session.Clear();
-                Response.Redirect("LoginInicial.aspx");
-            }
             if (!IsPostBack)
                 CargarSupervisores();
         }
-        protected void btnReporte_Click(object sender, EventArgs e)
+
+        private bool SesionValida()
         {
-            Response.Redirect("~/Report/ReporteSupervisor.aspx");
+            if (Session["credencial"] == null)
+                return false;
+
+            var partes = Session["credencial"].ToString().Split('|');
+            return partes.Length == 2 && InformaticaDAO.VerificarSesion(partes[0], partes[1]);
         }
+
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
-            string nombre = txtNombre.Text.Trim();
-            string correo = txtCorreo.Text.Trim();
-            string estado = txtEstado.Text.Trim();
-            int estacionId;
+            if (!Page.IsValid) return;
 
-            if (!string.IsNullOrEmpty(nombre) &&
-                !string.IsNullOrEmpty(correo) &&
-                !string.IsNullOrEmpty(estado) &&
-                int.TryParse(txtEstacionId.Text.Trim(), out estacionId))
+            if (int.TryParse(txtEstacionId.Text.Trim(), out int estacionId))
             {
-                using (SqlConnection conexion = Conexiones.Conectar())
-                using (SqlCommand cmd = new SqlCommand("usp_InsertarSupervisor", conexion))
-                {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@nombre", nombre);
-                    cmd.Parameters.AddWithValue("@correo", correo);
-                    cmd.Parameters.AddWithValue("@estacion_id", estacionId);
-                    cmd.Parameters.AddWithValue("@estado", estado);
-                    cmd.ExecuteNonQuery();
-                }
-
-                lblMensaje.Text = "Supervisor agregado correctamente.";
-                txtNombre.Text = txtCorreo.Text = txtEstacionId.Text = txtEstado.Text = "";
+                SupervisorDao.InsertarSupervisor(txtNombre.Text.Trim(), txtCorreo.Text.Trim(), estacionId, ddlEstado.SelectedValue);
+                MostrarMensaje("Supervisor agregado correctamente.", true);
+                LimpiarFormulario();
                 CargarSupervisores();
             }
             else
             {
-                lblMensaje.ForeColor = System.Drawing.Color.Red;
-                lblMensaje.Text = "Complete todos los campos correctamente.";
+                MostrarMensaje("ID de estación inválido.", false);
             }
+        }
+
+        private void MostrarMensaje(string mensaje, bool exito)
+        {
+            lblMensaje.Text = mensaje;
+            lblMensaje.CssClass = $"mt-3 d-block fw-bold text-{(exito ? "success" : "danger")}";
+        }
+
+        private void LimpiarFormulario()
+        {
+            txtNombre.Text = txtCorreo.Text = txtEstacionId.Text = "";
+            ddlEstado.SelectedIndex = 0;
+        }
+
+        protected void btnReporte_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Report/ReporteSupervisor.aspx");
+        }
+
+        protected void btnRegresar_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Default1.aspx");
         }
 
         private void CargarSupervisores()
         {
-            using (SqlConnection conexion = Conexiones.Conectar())
-            using (SqlCommand cmd = new SqlCommand("SELECT id_supervisor, nombre, correo, estacion_id, estado FROM supervisor", conexion))
-            {
-                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                DataTable tabla = new DataTable();
-                adapter.Fill(tabla);
-
-                gvSupervisores.DataSource = tabla;
-                gvSupervisores.DataBind();
-            }
+            gvSupervisores.DataSource = SupervisorDao.CargarDatosSupervisor();
+            gvSupervisores.DataBind();
         }
 
         protected void gvSupervisores_RowEditing(object sender, GridViewEditEventArgs e)
@@ -91,26 +86,19 @@ namespace ProyectoInformaticaWeb
 
         protected void gvSupervisores_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
-            GridViewRow row = gvSupervisores.Rows[e.RowIndex];
+            var row = gvSupervisores.Rows[e.RowIndex];
             int id = Convert.ToInt32(gvSupervisores.DataKeys[e.RowIndex].Value);
-            string nombre = ((TextBox)row.FindControl("txtNombreEdit")).Text.Trim();
-            string correo = ((TextBox)row.FindControl("txtCorreoEdit")).Text.Trim();
-            int estacionId = Convert.ToInt32(((TextBox)row.FindControl("txtEstacionEdit")).Text.Trim());
 
-            using (SqlConnection conn = Conexiones.Conectar())
-            using (SqlCommand cmd = new SqlCommand("usp_ActualizarSupervisor", conn))
+            string nombre = ((TextBox)row.FindControl("txtNombreEdit"))?.Text.Trim();
+            string correo = ((TextBox)row.FindControl("txtCorreoEdit"))?.Text.Trim();
+            string estacionText = ((TextBox)row.FindControl("txtEstacionEdit"))?.Text.Trim();
+
+            if (int.TryParse(estacionText, out int estacionId))
             {
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id_supervisor", id);
-                cmd.Parameters.AddWithValue("@nombre", nombre);
-                cmd.Parameters.AddWithValue("@correo", correo);
-                cmd.Parameters.AddWithValue("@estacion_id", estacionId);
-                cmd.Parameters.AddWithValue("@estado", "Activo"); // o conserva el actual
-                cmd.ExecuteNonQuery();
+                SupervisorDao.ActualizarSupervisor(id, nombre, correo, estacionId, "1"); // asume activo
+                gvSupervisores.EditIndex = -1;
+                CargarSupervisores();
             }
-
-            gvSupervisores.EditIndex = -1;
-            CargarSupervisores();
         }
 
         protected void gvSupervisores_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -121,23 +109,19 @@ namespace ProyectoInformaticaWeb
                 int id = Convert.ToInt32(gvSupervisores.DataKeys[index].Value);
                 string nuevoEstado = e.CommandName == "Habilitar" ? "1" : "0";
 
-                using (SqlConnection conn = Conexiones.Conectar())
-                using (SqlCommand cmd = new SqlCommand("usp_cambiarEstadoSupervisor", conn))
-                {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@id_supervisor", id);
-                    cmd.Parameters.AddWithValue("@nuevo_estado", nuevoEstado);
-                    cmd.ExecuteNonQuery();
-                }
-
+                SupervisorDao.CambiarEstadoSupervisor(id, nuevoEstado);
                 CargarSupervisores();
             }
         }
-        protected void btnRegresar_Click(object sender, EventArgs e)
+
+        public string ObtenerEstado(object estado)
         {
-            Response.Redirect("Default1.aspx");
+            switch (estado?.ToString().Trim())
+            {
+                case "1": return "Activo";
+                case "0": return "Inactivo";
+                default: return "Desconocido";
+            }
         }
-
     }
-
 }

@@ -5,154 +5,101 @@
 <head runat="server">
     <meta charset="utf-8" />
     <title>Gestión de Supervisores</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(to right, #00c6ff, #0072ff);
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        .form-container {
-            background-color: #fff;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.2);
-            width: 100%;
-            max-width: 500px;
-            text-align: center;
-            margin-top: 30px;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-            text-align: left;
-        }
-
-        label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        input[type="text"], input[type="number"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            box-sizing: border-box;
-        }
-
-        .btn {
-            width: 100%;
-            padding: 12px;
-            margin-top: 10px;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        .btn-ingresar { background-color: #48bb78; color: white; }
-        .btn-ingresar:hover { background-color: #38a169; }
-
-        .btn-regresar { background-color: #f56565; color: white; }
-        .btn-regresar:hover { background-color: #e53e3e; }
-
-        .tabla-usuarios {
-            margin-top: 30px;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            width: 90%;
-            max-width: 900px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: center;
-        }
-
-        th {
-            background-color: #0072ff;
-            color: white;
-        }
-    </style>
+    <link href="Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="Scripts/jquery-3.7.0.min.js"></script>
+    <script src="Scripts/bootstrap.bundle.min.js"></script>
 </head>
-<body>
+<body class="bg-light">
     <form id="form1" runat="server">
-        <div class="form-container">
-            <h2>Agregar Supervisor</h2>
+        <div class="container py-5">
+            <!-- Formulario -->
+            <div class="card shadow mb-4">
+                <div class="card-header bg-primary text-white text-center">
+                    <h2>Agregar Supervisor</h2>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="txtNombre" class="form-label">Nombre</label>
+                            <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control" MaxLength="100" />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="txtCorreo" class="form-label">Correo</label>
+                            <asp:TextBox ID="txtCorreo" runat="server" CssClass="form-control" MaxLength="100" TextMode="Email" />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="txtEstacionId" class="form-label">Estación ID</label>
+                            <asp:TextBox ID="txtEstacionId" runat="server" CssClass="form-control" TextMode="Number" />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="ddlEstado" class="form-label">Estado</label>
+                            <asp:DropDownList ID="ddlEstado" runat="server" CssClass="form-select">
+                                <asp:ListItem Text="Activo" Value="1" />
+                                <asp:ListItem Text="Inactivo" Value="0" />
+                            </asp:DropDownList>
+                        </div>
+                    </div>
 
-            <div class="form-group">
-                <label for="txtNombre">Nombre:</label>
-                <asp:TextBox ID="txtNombre" runat="server" MaxLength="100" />
+                    <div class="mt-4 d-flex justify-content-between flex-wrap gap-2">
+                        <asp:Button ID="btnAgregar" runat="server" Text="✔ Agregar" CssClass="btn btn-success" OnClick="btnAgregar_Click" />
+                        <asp:Button ID="btnReporte" runat="server" Text="📄 Reporte" CssClass="btn btn-primary" OnClick="btnReporte_Click" />
+                        <asp:Button ID="btnRegresar" runat="server" Text="↩ Regresar" CssClass="btn btn-danger" OnClick="btnRegresar_Click" />
+                    </div>
+
+                    <asp:Label ID="lblMensaje" runat="server" CssClass="mt-3 fw-bold d-block" />
+                </div>
             </div>
 
-            <div class="form-group">
-                <label for="txtCorreo">Correo:</label>
-                <asp:TextBox ID="txtCorreo" runat="server" MaxLength="100" />
+            <!-- Tabla -->
+            <div class="card shadow-sm">
+                <div class="card-header bg-secondary text-white text-center">
+                    <h3>Supervisores Registrados</h3>
+                </div>
+                <div class="card-body">
+                    <asp:GridView ID="gvSupervisores" runat="server" CssClass="table table-striped table-hover text-center"
+                        AutoGenerateColumns="False" DataKeyNames="id_supervisor"
+                        OnRowEditing="gvSupervisores_RowEditing"
+                        OnRowUpdating="gvSupervisores_RowUpdating"
+                        OnRowCancelingEdit="gvSupervisores_RowCancelingEdit"
+                        OnRowCommand="gvSupervisores_RowCommand">
+                        <Columns>
+                            <asp:BoundField HeaderText="ID" DataField="id_supervisor" ReadOnly="True" />
+                            <asp:TemplateField HeaderText="Nombre">
+                                <ItemTemplate><%# Eval("nombre") %></ItemTemplate>
+                                <EditItemTemplate>
+                                    <asp:TextBox ID="txtNombreEdit" runat="server" CssClass="form-control" Text='<%# Eval("nombre") %>' />
+                                </EditItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Correo">
+                                <ItemTemplate><%# Eval("correo") %></ItemTemplate>
+                                <EditItemTemplate>
+                                    <asp:TextBox ID="txtCorreoEdit" runat="server" CssClass="form-control" Text='<%# Eval("correo") %>' />
+                                </EditItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Estación ID">
+                                <ItemTemplate><%# Eval("estacion_id") %></ItemTemplate>
+                                <EditItemTemplate>
+                                    <asp:TextBox ID="txtEstacionEdit" runat="server" CssClass="form-control" Text='<%# Eval("estacion_id") %>' />
+                                </EditItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Estado">
+                                <ItemTemplate><%# ObtenerEstado(Eval("estado")) %></ItemTemplate>
+                            </asp:TemplateField>
+
+                            <asp:CommandField ShowEditButton="True" ButtonType="Button" EditText="✏️ Editar" UpdateText="💾 Guardar" CancelText="❌ Cancelar" />
+                            <asp:TemplateField HeaderText="Acción">
+                                <ItemTemplate>
+                                    <asp:LinkButton runat="server" CssClass="btn btn-sm btn-outline-warning"
+                                        CommandName='<%# Convert.ToInt32(Eval("estado")) == 1 ? "Deshabilitar" : "Habilitar" %>'
+                                        CommandArgument='<%# Container.DataItemIndex %>'>
+                                        <%# Convert.ToInt32(Eval("estado")) == 1 ? "🚫 Desactivar" : "✅ Activar" %>
+                                    </asp:LinkButton>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                        </Columns>
+                    </asp:GridView>
+                </div>
             </div>
-
-            <div class="form-group">
-                <label for="txtEstacionId">Estación ID:</label>
-                <asp:TextBox ID="txtEstacionId" runat="server" TextMode="Number" />
-            </div>
-
-            <div class="form-group">
-                <label for="txtEstado">Estado:</label>
-                <asp:TextBox ID="txtEstado" runat="server" MaxLength="20" />
-            </div>
-
-            <asp:Button ID="btnAgregar" runat="server" Text="Ingresar Supervisor" CssClass="btn btn-ingresar" OnClick="btnAgregar_Click" />
-            <asp:Button ID="btnRegresar" runat="server" Text="Regresar" CssClass="btn btn-regresar" OnClick="btnRegresar_Click" />
-            <asp:Button ID="btnReporte" runat="server" Text="Generar Reporte" CssClass="btn btn-regresar" OnClick="btnReporte_Click" />
-            <asp:Label ID="lblMensaje" runat="server" ForeColor="Green" />
-        </div>
-
-        <div class="tabla-usuarios">
-            <h3>Supervisores Registrados</h3>
-            <asp:GridView ID="gvSupervisores" runat="server" AutoGenerateColumns="false"
-                DataKeyNames="id_supervisor" OnRowEditing="gvSupervisores_RowEditing"
-                OnRowUpdating="gvSupervisores_RowUpdating" OnRowCancelingEdit="gvSupervisores_RowCancelingEdit"
-                OnRowCommand="gvSupervisores_RowCommand">
-                <Columns>
-                    <asp:BoundField HeaderText="ID" DataField="id_supervisor" ReadOnly="true" />
-                    <asp:TemplateField HeaderText="Nombre">
-                        <ItemTemplate><%# Eval("nombre") %></ItemTemplate>
-                        <EditItemTemplate>
-                            <asp:TextBox ID="txtNombreEdit" runat="server" Text='<%# Eval("nombre") %>' MaxLength="100" />
-                        </EditItemTemplate>
-                    </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Correo">
-                        <ItemTemplate><%# Eval("correo") %></ItemTemplate>
-                        <EditItemTemplate>
-                            <asp:TextBox ID="txtCorreoEdit" runat="server" Text='<%# Eval("correo") %>' MaxLength="100" />
-                        </EditItemTemplate>
-                    </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Estación ID">
-                        <ItemTemplate><%# Eval("estacion_id") %></ItemTemplate>
-                        <EditItemTemplate>
-                            <asp:TextBox ID="txtEstacionEdit" runat="server" Text='<%# Eval("estacion_id") %>' TextMode="Number" />
-                        </EditItemTemplate>
-                    </asp:TemplateField>
-                    <asp:BoundField HeaderText="Estado" DataField="estado" ReadOnly="true" />
-                    <asp:CommandField ShowEditButton="true" />
-                    <asp:ButtonField ButtonType="Button" Text="Deshabilitar" CommandName="Deshabilitar" />
-                    <asp:ButtonField ButtonType="Button" Text="Habilitar" CommandName="Habilitar" />
-                </Columns>
-            </asp:GridView>
         </div>
     </form>
 </body>

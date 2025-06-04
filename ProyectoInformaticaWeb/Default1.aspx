@@ -53,6 +53,7 @@
         <a href="Incidencias.aspx">INCIDENCIAS</a>
         <a href="Usuario1.aspx">CREACION USUARIOS</a>
         <a href="Puertas.aspx">MANTENIMIENTO PUERTAS</a>
+        <a href="SupervisorPuerta.aspx">PUERTAS/SUPERVISOR</a>
     </nav>
 
     <main>
