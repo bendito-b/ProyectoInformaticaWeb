@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Data;
-using System.Data.SqlClient;
 using System.Web.UI.WebControls;
 using ProyectoInformaticaWeb.ClasesCDAO;
 
@@ -8,7 +7,6 @@ namespace ProyectoInformaticaWeb
 {
     public partial class Roles : System.Web.UI.Page
     {
-
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["credencial"] == null)
@@ -23,6 +21,7 @@ namespace ProyectoInformaticaWeb
                 Session.Clear();
                 Response.Redirect("LoginInicial.aspx");
             }
+
             if (!IsPostBack)
                 CargarRoles();
         }
@@ -31,17 +30,11 @@ namespace ProyectoInformaticaWeb
         {
             if (!string.IsNullOrWhiteSpace(txtNombreRol.Text) && !string.IsNullOrWhiteSpace(txtEstadoRol.Text))
             {
-                using (SqlConnection conn = Conexiones.Conectar())
-                using (SqlCommand cmd = new SqlCommand("usp_InsertarRol", conn))
-                {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@nombre", txtNombreRol.Text.Trim());
-                    cmd.Parameters.AddWithValue("@estado", txtEstadoRol.Text.Trim());
-                    cmd.ExecuteNonQuery();
-                }
+                RolesDAOcs.InsertarRol(txtNombreRol.Text.Trim(), txtEstadoRol.Text.Trim());
 
                 txtNombreRol.Text = "";
                 txtEstadoRol.Text = "";
+                lblMensaje.ForeColor = System.Drawing.Color.Green;
                 lblMensaje.Text = "Rol ingresado correctamente.";
                 CargarRoles();
             }
@@ -54,23 +47,14 @@ namespace ProyectoInformaticaWeb
 
         private void CargarRoles()
         {
-            using (SqlConnection conn = Conexiones.Conectar())
-            using (SqlCommand cmd = new SqlCommand("usp_ObtenerRoles", conn))
-            {
-                cmd.CommandType = CommandType.StoredProcedure;
-                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                adapter.Fill(dt);
-
-                gvRoles.DataSource = dt;
-                gvRoles.DataBind();
-            }
+            gvRoles.DataSource = RolesDAOcs.ObtenerRoles();
+            gvRoles.DataBind();
         }
+
         protected void btnReporte_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/Report/ReporteRoles.aspx");
         }
-
 
         protected void gvRoles_RowEditing(object sender, GridViewEditEventArgs e)
         {
@@ -91,14 +75,7 @@ namespace ProyectoInformaticaWeb
             TextBox txtNombre = (TextBox)row.FindControl("txtNombreEdit");
             string nombreNuevo = txtNombre.Text.Trim();
 
-            using (SqlConnection conn = Conexiones.Conectar())
-            using (SqlCommand cmd = new SqlCommand("usp_ActualizarRol", conn))
-            {
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id_rol", idRol);
-                cmd.Parameters.AddWithValue("@nombre", nombreNuevo);
-                cmd.ExecuteNonQuery();
-            }
+            RolesDAOcs.ActualizarRol(idRol, nombreNuevo);
 
             gvRoles.EditIndex = -1;
             CargarRoles();
@@ -112,15 +89,7 @@ namespace ProyectoInformaticaWeb
                 int idRol = Convert.ToInt32(gvRoles.DataKeys[index].Value);
                 string nuevoEstado = e.CommandName == "Habilitar" ? "1" : "0";
 
-                using (SqlConnection conn = Conexiones.Conectar())
-                using (SqlCommand cmd = new SqlCommand("usp_CambiarEstadoRol", conn))
-                {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@id_rol", idRol);
-                    cmd.Parameters.AddWithValue("@estado", nuevoEstado);
-                    cmd.ExecuteNonQuery();
-                }
-
+                RolesDAOcs.CambiarEstadoRol(idRol, nuevoEstado);
                 CargarRoles();
             }
         }
