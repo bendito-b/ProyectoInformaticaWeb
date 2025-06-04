@@ -33,7 +33,7 @@ namespace ProyectoInformaticaWeb
 
             if (int.TryParse(txtEstacionId.Text.Trim(), out int estacionId))
             {
-                SupervisorDAO.InsertarSupervisor(txtNombre.Text.Trim(), txtCorreo.Text.Trim(), estacionId, ddlEstado.SelectedValue);
+                SupervisorDao.InsertarSupervisor(txtNombre.Text.Trim(), txtCorreo.Text.Trim(), estacionId, ddlEstado.SelectedValue);
                 MostrarMensaje("Supervisor agregado correctamente.", true);
                 LimpiarFormulario();
                 CargarSupervisores();
@@ -68,7 +68,7 @@ namespace ProyectoInformaticaWeb
 
         private void CargarSupervisores()
         {
-            gvSupervisores.DataSource = SupervisorDAO.CargarDatosSupervisor();
+            gvSupervisores.DataSource = SupervisorDao.CargarDatosSupervisor();
             gvSupervisores.DataBind();
         }
 
@@ -95,7 +95,7 @@ namespace ProyectoInformaticaWeb
 
             if (int.TryParse(estacionText, out int estacionId))
             {
-                SupervisorDAO.ActualizarSupervisor(id, nombre, correo, estacionId, "1"); // asume activo
+                SupervisorDao.ActualizarSupervisor(id, nombre, correo, estacionId, "1"); // asume activo
                 gvSupervisores.EditIndex = -1;
                 CargarSupervisores();
             }
@@ -109,7 +109,7 @@ namespace ProyectoInformaticaWeb
                 int id = Convert.ToInt32(gvSupervisores.DataKeys[index].Value);
                 string nuevoEstado = e.CommandName == "Habilitar" ? "1" : "0";
 
-                SupervisorDAO.CambiarEstadoSupervisor(id, nuevoEstado);
+                SupervisorDao.CambiarEstadoSupervisor(id, nuevoEstado);
                 CargarSupervisores();
             }
         }

@@ -6,7 +6,7 @@ using System.Web;
 
 namespace ProyectoInformaticaWeb.ClasesCDAO
 {
-    public class SupervisorDAO
+    public class SupervisorDao
     {
         // Obtener todos los supervisores
         public static DataTable CargarDatosSupervisor()
